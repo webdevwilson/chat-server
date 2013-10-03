@@ -1,8 +1,9 @@
 package chat.server;
 
-import chat.server.ejb.ChatServerEjb;
+import chat.server.events.MessageEvent;
 import chat.server.model.Message;
-import javax.ejb.EJB;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,12 +14,12 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class SayEndpoint {
 
-  @EJB
-  private ChatServerEjb chatServer;
+  @Inject
+  Event<MessageEvent> messageEvent;
   
   @POST
   public Response speak(final Message message) {
-    chatServer.say(message);
+    messageEvent.fire(new MessageEvent(message));
     return Response.ok().build();
   }
   

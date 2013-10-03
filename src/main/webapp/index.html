@@ -4,50 +4,63 @@
         <title>Chat Server</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript">
-            
+
+            String.prototype.escapeHtml = function() {
+                var tagsToReplace = {'<': '&lt;', '>': '&gt;'};
+                return this.replace(/[&<>]/g, function(tag) {
+                    return tagsToReplace[tag] || tag;
+                });
+            };
+
             window.onload = function() {
-                var chatter=document.getElementById("chatter");
-                var say=document.getElementById("message");
+                var chatter = document.getElementById("chatter");
+                var say = document.getElementById("message");
                 var listen = new WebSocket('ws://localhost:8080/chat-server/listen');
                 listen.onmessage = function(message) {
-                    var li=document.createElement("li");
-                    var m=message.data;
-                    var c=m.indexOf(':');
-                    var username=m.substring(0,c);
-                    var message=m.substring(c+1);
-                    li.innerHTML='<span class=\'user\'>' + username + ' says </span> ' + '<span class=\'message\'>' + message + '</span>';
+                    var li = document.createElement("li");
+                    var m = message.data;
+                    var c = m.indexOf(':');
+                    var username = m.substring(0, c).escapeHtml();
+                    var message = m.substring(c + 1).escapeHtml();
+                    li.innerHTML = '<span class=\'user\'>' + username + ' says </span> ' + '<span class=\'message\'>' + message + '</span>';
                     chatter.appendChild(li);
-                    chatter.scrollTop=chatter.scrollHeight;
+                    chatter.scrollTop = chatter.scrollHeight;
                 };
-                
-                var history=[], historyIndex=0;
-                
+
+                var history = [], historyIndex = 0;
+
                 var showHistory = function(inc) {
-                    if(inc < 0 && historyIndex>0 || inc>0 && historyIndex<history.length-1) {
-                        historyIndex+=inc;
-                        say.value=history[historyIndex];
+                    if (inc < 0 && historyIndex > 0 || inc > 0 && historyIndex < history.length - 1) {
+                        historyIndex += inc;
+                        say.value = history[historyIndex];
                     }
                 };
-                
+
                 var pushHistory = function() {
                     history.push(say.value);
-                    historyIndex=history.length;
+                    historyIndex = history.length;
                 };
-                
+
                 var sendMessage = function() {
-                  var username='webdevwilson';
-                  var msg='{"message":"'+say.value+'","user":{"username":"'+username+'"}}';
-                  pushHistory();
-                  say.value='';
-                  var xmlHttp = new XMLHttpRequest();
-                  xmlHttp.open('POST', '/chat-server/rest/say', false);
-                  xmlHttp.setRequestHeader("Content-Type","application/json");
-                  xmlHttp.send(msg);
+                    if (say.value === '')
+                        return;
+                    var msgTxt=say.value.replace(/"/g, '&quot;');
+                    var username = 'webdevwilson';
+                    var msg = '{"message":"' + msgTxt + '","user":{"username":"' + username + '"}}';
+                    pushHistory();
+                    say.value = '';
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.open('POST', '/chat-server/rest/say', false);
+                    xmlHttp.setRequestHeader("Content-Type", "application/json");
+                    xmlHttp.send(msg);
                 };
                 say.onkeyup = function(e) {
-                    if(e.keyCode===13) { sendMessage();
-                    } else if (e.keyCode===38) { showHistory(-1);
-                    } else if (e.keyCode===40) { showHistory(1);
+                    if (e.keyCode === 13) {
+                        sendMessage();
+                    } else if (e.keyCode === 38) {
+                        showHistory(-1);
+                    } else if (e.keyCode === 40) {
+                        showHistory(1);
                     }
                 };
                 say.focus();
