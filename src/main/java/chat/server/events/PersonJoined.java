@@ -2,10 +2,14 @@ package chat.server.events;
 
 public class PersonJoined {
 
-  private String username;
+  private final String username;
 
   public PersonJoined(final String username) {
     this.username = username;
+  }
+
+  public String getUsername() {
+    return username;
   }
   
 }

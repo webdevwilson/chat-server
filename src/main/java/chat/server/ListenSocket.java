@@ -19,7 +19,7 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/listen")
 public class ListenSocket {
 
-  private static final List<Session> SESSIONS = new ArrayList<Session>();
+  private static final List<Session> SESSIONS = new ArrayList<>();
   
   @Inject
   Event<PersonJoined> personJoinedEvent;

@@ -21,10 +21,15 @@
                     var m = message.data;
                     var c = m.indexOf(':');
                     var username = m.substring(0, c).escapeHtml();
-                    var message = m.substring(c + 1).escapeHtml();
+                    var message = links(m.substring(c + 1).escapeHtml());
                     li.innerHTML = '<span class=\'user\'>' + username + ' says </span> ' + '<span class=\'message\'>' + message + '</span>';
                     chatter.appendChild(li);
                     chatter.scrollTop = chatter.scrollHeight;
+                };
+
+                var links = function(msg) {
+                  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
+                  return msg.replace(exp,"<a href='$1' target='_BLANK'>$1</a>");  
                 };
 
                 var history = [], historyIndex = 0;

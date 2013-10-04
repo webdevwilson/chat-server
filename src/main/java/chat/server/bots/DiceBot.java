@@ -2,9 +2,7 @@ package chat.server.bots;
 
 import chat.server.events.MessageEvent;
 import chat.server.model.Message;
-import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
 @Command("roll")
 public class DiceBot extends CommandBot {
@@ -13,7 +11,6 @@ public class DiceBot extends CommandBot {
     final Message message = messageEvent.getMessage();
     if("/roll".equals(message.getMessage())) {
       messageEvent.veto();
-      
     }
   }
 
