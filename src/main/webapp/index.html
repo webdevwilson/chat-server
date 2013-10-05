@@ -5,13 +5,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript">
 
-            String.prototype.escapeHtml = function() {
-                var tagsToReplace = {'<': '&lt;', '>': '&gt;'};
-                return this.replace(/[&<>]/g, function(tag) {
-                    return tagsToReplace[tag] || tag;
-                });
-            };
-
             window.onload = function() {
                 var chatter = document.getElementById("chatter");
                 var say = document.getElementById("message");
@@ -20,16 +13,11 @@
                     var li = document.createElement("li");
                     var m = message.data;
                     var c = m.indexOf(':');
-                    var username = m.substring(0, c).escapeHtml();
-                    var message = links(m.substring(c + 1).escapeHtml());
+                    var username = m.substring(0, c);
+                    var message = m.substring(c + 1);
                     li.innerHTML = '<span class=\'user\'>' + username + ' says </span> ' + '<span class=\'message\'>' + message + '</span>';
                     chatter.appendChild(li);
                     chatter.scrollTop = chatter.scrollHeight;
-                };
-
-                var links = function(msg) {
-                  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
-                  return msg.replace(exp,"<a href='$1' target='_BLANK'>$1</a>");  
                 };
 
                 var history = [], historyIndex = 0;

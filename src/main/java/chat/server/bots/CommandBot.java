@@ -6,7 +6,6 @@ import java.util.Arrays;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 public abstract class CommandBot {
   
