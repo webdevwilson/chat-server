@@ -7,19 +7,19 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-public abstract class CommandBot {
+public abstract class AbstractCommandBot {
   
   @Inject
   private Event<MessageEvent> messageEventDispatch;
   
   private final String command;
 
-  public CommandBot() {
+  public AbstractCommandBot() {
     command = getClass().getAnnotation(Command.class).value();
   }
   
   public final void message(@Observes MessageEvent messageEvent) {
-    final String message = messageEvent.getMessage().getMessage();
+    final String message = messageEvent.getMessage().getText();
     final String[] messageParts = message.split(" ");
     if(messageParts[0].equalsIgnoreCase("/" + command)) {
       messageEvent.veto();

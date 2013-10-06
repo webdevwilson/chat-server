@@ -3,7 +3,7 @@ package chat.server.bots;
 import chat.server.model.Message;
 
 @Command("help")
-public class HelpBot extends CommandBot {
+public class HelpBot extends AbstractCommandBot {
 
   @Override
   public void executeCommand(Message message, String[] args) {

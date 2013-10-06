@@ -5,11 +5,11 @@ import chat.server.model.Message;
 import javax.enterprise.event.Observes;
 
 @Command("roll")
-public class DiceBot extends CommandBot {
+public class DiceBot extends AbstractCommandBot {
 
   public void roll(@Observes MessageEvent messageEvent) {
     final Message message = messageEvent.getMessage();
-    if("/roll".equals(message.getMessage())) {
+    if("/roll".equals(message.getText())) {
       messageEvent.veto();
     }
   }

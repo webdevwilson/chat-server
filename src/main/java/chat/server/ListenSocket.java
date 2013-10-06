@@ -44,7 +44,7 @@ public class ListenSocket {
     if(!messageEvent.isVetoed()) {
       final Message message = messageEvent.getMessage();
       for (final Session session : SESSIONS) {
-        session.getAsyncRemote().sendText(message.getUser().getUsername() + ":" + message.getMessage());
+        session.getAsyncRemote().sendText(message.getUser().getUsername() + ":" + message.getText());
       }
     }
   }

@@ -19,7 +19,7 @@ public class SayEndpoint {
   
   @POST
   public Response speak(final Message message) {
-    message.setMessage(escapeHtml(message.getMessage()));
+    message.setText(escapeHtml(message.getText()));
     messageEvent.fire(new MessageEvent(message));
     return Response.ok().build();
   }

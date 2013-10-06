@@ -39,7 +39,7 @@
                         return;
                     var msgTxt=say.value.replace(/"/g, '&quot;');
                     var username = 'webdevwilson';
-                    var msg = '{"message":"' + msgTxt + '","user":{"username":"' + username + '"}}';
+                    var msg = '{"text":"' + msgTxt + '","user":{"username":"' + username + '"}}';
                     pushHistory();
                     say.value = '';
                     var xmlHttp = new XMLHttpRequest();

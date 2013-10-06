@@ -8,7 +8,7 @@ public class Message {
   
   private Date date;
   
-  private String message;
+  private String text;
   
   private User user;
 
@@ -16,7 +16,7 @@ public class Message {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(final long id) {
     this.id = id;
   }
 
@@ -24,29 +24,37 @@ public class Message {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(final Date date) {
     this.date = date;
   }
 
-  public String getMessage() {
-    return message;
+  public String getText() {
+    return text;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
+  public void setText(final String text) {
+    this.text = text;
   }
 
   public User getUser() {
     return user;
   }
 
-  public void setUser(User user) {
+  public void setUser(final User user) {
     this.user = user;
+  }
+  
+  public Message edit(final String newText) {
+    final Message newMessage = new Message();
+    newMessage.setDate(date);
+    newMessage.setUser(user);
+    newMessage.setText(newText);
+    return newMessage;
   }
   
   public static Message create(final String username, final String messageText) {
     final Message message = new Message();
-    message.message = messageText;
+    message.text = messageText;
     message.user = new User();
     message.user.setUsername(username);
     return message;
