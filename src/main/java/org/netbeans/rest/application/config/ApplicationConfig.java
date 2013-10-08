@@ -1,11 +1,3 @@
-/*
- * Created: Oct 2, 2013
- * Author:  Kerry Wilson
- *
- * This code is copyright (c) 2013 Vanderbilt University Medical Center
- */
-
-
 package org.netbeans.rest.application.config;
 
 import java.util.Set;
@@ -29,6 +21,7 @@ public class ApplicationConfig extends Application {
    * If required, comment out calling this method in getClasses().
    */
   private void addRestResourceClasses(Set<Class<?>> resources) {
+    resources.add(chat.server.SayEndpoint.class);
   }
 
 }
