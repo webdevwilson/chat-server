@@ -11,7 +11,7 @@ public class TextProcessorBot {
 
   public void process(@Observes final MessageEvent messageEvent) {
     final Message message = messageEvent.getMessage();
-    final String messageText = replaceLinks(message.getText());
+    final String messageText = addBrs(replaceLinks(message.getText()));
 
     if (!messageText.equals(message.getText())) {
       message.setText(messageText);
@@ -20,6 +20,10 @@ public class TextProcessorBot {
 
   String replaceLinks(final String message) {
     return pattern.matcher(message).replaceAll("<a href=\"$1\" target=\"_BLANK\">$1</a>");
+  }
+  
+  String addBrs(final String message) {
+    return message.replace("\n", "<br>");
   }
 
 }

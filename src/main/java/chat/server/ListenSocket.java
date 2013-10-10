@@ -27,11 +27,7 @@ public class ListenSocket {
   @OnOpen
   public void openConnection(final Session session) {
     SESSIONS.add(session);
-  }
-  
-  @OnMessage
-  public void rename(final String message) {
-    personJoinedEvent.fire(new PersonJoined(message));    
+    personJoinedEvent.fire(new PersonJoined(session.getId()));
   }
   
   @OnClose

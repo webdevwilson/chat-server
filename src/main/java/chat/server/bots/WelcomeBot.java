@@ -17,7 +17,7 @@ public class WelcomeBot {
   private Event<MessageEvent> messageEvent;
   
   public void welcome(@Observes PersonJoined personJoined) {
-    messageEvent.fire(new MessageEvent(Message.create("WelcomeBot", "Welcome " + personJoined.getUsername())));
+    messageEvent.fire(new MessageEvent(Message.create("WelcomeBot", "type '/help' to view available commands")));
   }
   
 }
